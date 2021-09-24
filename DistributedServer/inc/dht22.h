@@ -11,7 +11,7 @@
 #define DEBUG 1
 #define WAIT_TIME 2000
 
-int setup_dht22();
-int read_dht22_data(float *temperature, float *humidity);
+int dht22_setup();
+int dht22_read_data(float *temperature, float *humidity);
 
 #endif

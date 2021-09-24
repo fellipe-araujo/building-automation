@@ -7,10 +7,10 @@ int main () {
   float temperature = -1;
   float humidity  = -1;
 
-  setup_dht22();
+  dht22_setup();
 
   while (1) {
-    read_dht22_data(&temperature, &humidity);
+    dht22_read_data(&temperature, &humidity);
     sleep(1);
   }
 

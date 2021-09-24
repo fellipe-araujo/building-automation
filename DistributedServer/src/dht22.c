@@ -13,11 +13,11 @@ uint8_t dht_pin = 28;  // GPIO 20 (wiringPi 28)
 int data[5] = { 0, 0, 0, 0, 0 };
 
 // FUNCTION DECLARATIONS
-int setup_dht22();
-int read_dht22_data(float *temperature, float *humidity);
+int dht22_setup();
+int dht22_read_data(float *temperature, float *humidity);
 
 // FUNCTION DEFINITIONS
-int read_dht22_data(float *temperature, float *humidity) {
+int dht22_read_data(float *temperature, float *humidity) {
 	uint8_t laststate = HIGH;
 	uint8_t counter	= 0;
 	uint8_t j = 0;
@@ -85,7 +85,7 @@ int read_dht22_data(float *temperature, float *humidity) {
 	}
 }
 
-int setup_dht22() {
+int dht22_setup() {
 	if (wiringPiSetup() == -1) {
 		fprintf(stderr, "Failed to initialize wiringPi\n");
 		exit(1);
