@@ -72,19 +72,46 @@ void handle_window_2_first() {
   printf("Window 2 sensor on the first floor was detected!");
 }
 
+void gpio_setup(int floor) {
   wiringPiSetup();
 
-  pinMode(SP_T, OUTPUT);
-  pinMode(SF_T, OUTPUT);
-  pinMode(SJ_T01, OUTPUT);
-  pinMode(SJ_T02, OUTPUT);
-  pinMode(SPo_T, OUTPUT);
-  pinMode(SC_IN, OUTPUT);
-  pinMode(SC_OUT, OUTPUT);
-  pinMode(SP_1, OUTPUT);
-  pinMode(SF_1, OUTPUT);
-  pinMode(SJ_101, OUTPUT);
-  pinMode(SJ_102, OUTPUT);
+  // floor = 0 -> ground
+  // floor = 1 -> first
+  if (floor == 0) {
+    pinMode(SP_T, OUTPUT);
+    wiringPiISR(SP_T, INT_EDGE_BOTH, &handle_presence_ground);
+
+    pinMode(SF_T, OUTPUT);
+    wiringPiISR(SF_T, INT_EDGE_BOTH, &handle_smoke_ground);
+
+    pinMode(SJ_T01, OUTPUT);
+    wiringPiISR(SJ_T01, INT_EDGE_BOTH, &handle_window_1_ground);
+    
+    pinMode(SJ_T02, OUTPUT);
+    wiringPiISR(SJ_T02, INT_EDGE_BOTH, &handle_window_2_ground);
+
+    pinMode(SPo_T, OUTPUT);
+    wiringPiISR(SPo_T, INT_EDGE_BOTH, &handle_door_ground);
+
+    pinMode(SC_IN, OUTPUT);
+    wiringPiISR(SC_IN, INT_EDGE_BOTH, &handle_counter_in_ground);
+
+    pinMode(SC_OUT, OUTPUT);
+    wiringPiISR(SC_OUT, INT_EDGE_BOTH, &handle_counter_out_ground);
+
+  } else if (floor == 1) {
+    pinMode(SP_1, OUTPUT);
+    wiringPiISR(SP_1, INT_EDGE_BOTH, &handle_presence_first);
+
+    pinMode(SF_1, OUTPUT);
+    wiringPiISR(SF_1, INT_EDGE_BOTH, &handle_smoke_first);
+
+    pinMode(SJ_101, OUTPUT);
+    wiringPiISR(SJ_101, INT_EDGE_BOTH, &handle_window_1_first);
+
+    pinMode(SJ_102, OUTPUT);
+    wiringPiISR(SJ_102, INT_EDGE_BOTH, &handle_window_2_first);
+  }
 }
 
 void change_device_state(int device, int state) {
