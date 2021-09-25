@@ -17,7 +17,61 @@ int device_exist(int device) {
   return 0;
 }
 
-void gpio_setup() {
+void handle_presence_ground() {
+  int state = digitalRead(SP_T);
+  printf("Presence sensor on the ground floor was detected!");
+}
+
+void handle_smoke_ground() {
+  int state = digitalRead(SF_T);
+  printf("Smoke sensor on the ground floor was detected!");
+}
+
+void handle_window_1_ground() {
+  int state = digitalRead(SJ_T01);
+  printf("Window 1 sensor on the ground floor was detected!");
+}
+
+void handle_window_2_ground() {
+  int state = digitalRead(SJ_T02);
+  printf("Window 2 sensor on the ground floor was detected!");
+}
+
+void handle_door_ground() {
+  int state = digitalRead(SPo_T);
+  printf("Door sensor on the ground floor was detected!");
+}
+
+void handle_counter_in_ground() {
+  int state = digitalRead(SC_IN);
+  printf("Counter in sensor on the ground floor was detected!");
+}
+
+void handle_counter_out_ground() {
+  int state = digitalRead(SC_OUT);
+  printf("Counter out sensor on the ground floor was detected!");
+}
+
+void handle_presence_first() {
+  int state = digitalRead(SP_1);
+  printf("Presence sensor on the first floor was detected!");
+}
+
+void handle_smoke_first() {
+  int state = digitalRead(SF_1);
+  printf("Smoke sensor on the first floor was detected!");
+}
+
+void handle_window_1_first() {
+  int state = digitalRead(SJ_101);
+  printf("Window 1 sensor on the first floor was detected!");
+}
+
+void handle_window_2_first() {
+  int state = digitalRead(SJ_102);
+  printf("Window 2 sensor on the first floor was detected!");
+}
+
   wiringPiSetup();
 
   pinMode(SP_T, OUTPUT);
@@ -40,7 +94,7 @@ void change_device_state(int device, int state) {
   }
 }
 
-void disable_output_devoces() {
+void disable_output_devices() {
   change_device_state(LS_T01, LOW);
   change_device_state(LS_T02, LOW);
   change_device_state(LC_T, LOW);
