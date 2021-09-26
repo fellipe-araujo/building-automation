@@ -6,6 +6,12 @@
 #include <unistd.h>
 #include "gpio.h"
 #include "data.h"
+#include "dht22.h"
+
+#define PORT 10111
+
+int serverSocket;
+int socketClient;
 
 void handle_output_devices(int device) {
   Data data = get_data();
@@ -106,4 +112,64 @@ void handle_output_devices(int device) {
   }
 
   set_data(data);
+}
+
+void handle_client(int socketClient) {
+  char buffer[16];
+  char response[16];
+  int responseLength;
+  int command;
+  float temperature = -1;
+  float humidity  = -1;
+
+  dht22_read_data(&temperature, &humidity);
+
+  if ((responseLength = recv(socketClient, buffer, 16, 0)) < 0) {
+    printf("Erro no recv()\n");
+  }
+
+  sscanf(buffer, "%d", &command);
+  handle_output_devices(command);
+  snprintf(response, 15, "%d %.2f %.2f", command, temperature, humidity);
+
+  if (send(socketClient, response, 16 - 1, 0) != 15) {
+    printf("Erro no envio - sends()\n");
+  }
+}
+
+void receive_messages() {
+  struct sockaddr_in serverAddr;
+  struct sockaddr_in clientAddr;
+  unsigned int clientLength;
+
+  if ((serverSocket = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0) {
+    printf("falha no socker do Servidor\n");
+  }
+
+  memset(&serverAddr, 0, sizeof(serverAddr));
+  serverAddr.sin_family = AF_INET;
+  serverAddr.sin_addr.s_addr = htonl(INADDR_ANY);
+  serverAddr.sin_port = htons(PORT);
+
+  if (bind(serverSocket, (struct sockaddr *)&serverAddr, sizeof(serverAddr)) < 0) {
+    printf("Falha no Bind\n");
+  }
+
+  if (listen(serverSocket, 10) < 0) {
+    printf("Falha no Listen\n");
+  }
+
+  while (1) {
+    clientLength = sizeof(clientAddr);
+    
+    if ((socketClient = accept(serverSocket, (struct sockaddr *)&clientAddr, &clientLength)) < 0) {
+      printf("Falha no Accept\n");
+    }
+
+    printf("Client Connected %s\n", inet_ntoa(clientAddr.sin_addr));
+
+    handle_client(socketClient);
+    close(socketClient);
+  }
+  close(serverSocket);
 }
