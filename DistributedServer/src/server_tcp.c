@@ -7,6 +7,7 @@
 #include "gpio.h"
 #include "data.h"
 #include "dht22.h"
+#include "socket_quit.h"
 
 #define PORT 10111
 
@@ -126,6 +127,7 @@ void handle_client(int socketClient) {
 
   if ((responseLength = recv(socketClient, buffer, 16, 0)) < 0) {
     printf("Erro no recv()\n");
+    finishWithError(0);
   }
 
   sscanf(buffer, "%d", &command);
@@ -134,6 +136,7 @@ void handle_client(int socketClient) {
 
   if (send(socketClient, response, 16 - 1, 0) != 15) {
     printf("Erro no envio - sends()\n");
+    finishWithError(0);
   }
 }
 
@@ -144,6 +147,7 @@ void receive_messages() {
 
   if ((serverSocket = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0) {
     printf("falha no socker do Servidor\n");
+    finishWithError(0);
   }
 
   memset(&serverAddr, 0, sizeof(serverAddr));
@@ -153,10 +157,12 @@ void receive_messages() {
 
   if (bind(serverSocket, (struct sockaddr *)&serverAddr, sizeof(serverAddr)) < 0) {
     printf("Falha no Bind\n");
+    finishWithError(0);
   }
 
   if (listen(serverSocket, 10) < 0) {
     printf("Falha no Listen\n");
+    finishWithError(0);
   }
 
   while (1) {
@@ -164,6 +170,7 @@ void receive_messages() {
     
     if ((socketClient = accept(serverSocket, (struct sockaddr *)&clientAddr, &clientLength)) < 0) {
       printf("Falha no Accept\n");
+      finishWithError(0);
     }
 
     printf("Client Connected %s\n", inet_ntoa(clientAddr.sin_addr));

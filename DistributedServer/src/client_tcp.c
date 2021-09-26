@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include "socket_quit.h"
 
 #define LEN 16
 
@@ -23,6 +24,7 @@ void send_command(int command, int state) {
 
   if ((clientSocket = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0) {
     printf("Erro no socket()");
+    finishWithError(0);
   }
 
   memset(&serverAddr, 0, sizeof(serverAddr));
@@ -32,18 +34,21 @@ void send_command(int command, int state) {
 
   if (connect(clientSocket, (struct sockaddr *)&serverAddr, sizeof(serverAddr)) < 0) {
     printf("Erro no connect()\n");
+    finishWithError(0);
   }
 
   messageLength = strlen(message);
 
   if (send(clientSocket, message, messageLength, 0) != messageLength) {
     printf("Erro no envio: numero de bytes enviados diferente do esperado\n");
+    finishWithError(0);
   }
 
   totalBytesReceived = recv(clientSocket, buffer, LEN - 1, 0);
 
   if (totalBytesReceived < 1) {
     printf("Não recebeu o total de bytes enviados\n");
+    finishWithError(0);
   }
 
   printf("%s\n", buffer);
