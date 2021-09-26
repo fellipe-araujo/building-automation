@@ -173,3 +173,8 @@ void receive_messages() {
   }
   close(serverSocket);
 }
+
+void close_server_socket() {
+  close(socketClient);
+  close(serverSocket);
+}
