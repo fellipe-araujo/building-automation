@@ -2,8 +2,7 @@
 #include <signal.h>
 #include <stdlib.h>
 #include "gpio.h"
-#include "server_tcp.h"
-#include "data.h"
+#include "socket_tcp.h"
 
 void finish(int signal) {
   close_server_socket();
@@ -17,7 +16,7 @@ void finishWithError(int signal) {
   finish(0);
 }
 
-void quit_handler() {
+void quit_setup() {
   signal(SIGINT, finish);
   signal(SIGPIPE, finishWithError);
 }

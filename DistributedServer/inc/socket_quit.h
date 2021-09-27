@@ -3,6 +3,6 @@
 
 void finish(int signal);
 void finishWithError(int signal);
-void quit_handler();
+void quit_setup();
 
 #endif
