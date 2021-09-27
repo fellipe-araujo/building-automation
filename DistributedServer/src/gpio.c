@@ -1,4 +1,10 @@
 #include "gpio.h"
+#include "socket_tcp.h"
+
+void gpio_setup() {
+  wiringPiSetup();
+  disable_output_devices();
+}
 
 int device_exist(int device) {
   if (
@@ -18,63 +24,61 @@ int device_exist(int device) {
 }
 
 void handle_presence_ground() {
-  int state = digitalRead(SP_T);
   printf("Presence sensor on the ground floor was detected!");
+  send_command(SP_T);
 }
 
 void handle_smoke_ground() {
-  int state = digitalRead(SF_T);
   printf("Smoke sensor on the ground floor was detected!");
+  send_command(SF_T);
 }
 
 void handle_window_1_ground() {
-  int state = digitalRead(SJ_T01);
   printf("Window 1 sensor on the ground floor was detected!");
+  send_command(SJ_T01);
 }
 
 void handle_window_2_ground() {
-  int state = digitalRead(SJ_T02);
   printf("Window 2 sensor on the ground floor was detected!");
+  send_command(SJ_T02);
 }
 
 void handle_door_ground() {
-  int state = digitalRead(SPo_T);
   printf("Door sensor on the ground floor was detected!");
+  send_command(SPo_T);
 }
 
 void handle_counter_in_ground() {
-  int state = digitalRead(SC_IN);
   printf("Counter in sensor on the ground floor was detected!");
+  send_command(SC_IN);
 }
 
 void handle_counter_out_ground() {
-  int state = digitalRead(SC_OUT);
   printf("Counter out sensor on the ground floor was detected!");
+  send_command(SC_OUT);
 }
 
 void handle_presence_first() {
-  int state = digitalRead(SP_1);
   printf("Presence sensor on the first floor was detected!");
+  send_command(SP_1);
 }
 
 void handle_smoke_first() {
-  int state = digitalRead(SF_1);
   printf("Smoke sensor on the first floor was detected!");
+  send_command(SF_1);
 }
 
 void handle_window_1_first() {
-  int state = digitalRead(SJ_101);
   printf("Window 1 sensor on the first floor was detected!");
+  send_command(SJ_101);
 }
 
 void handle_window_2_first() {
-  int state = digitalRead(SJ_102);
   printf("Window 2 sensor on the first floor was detected!");
+  send_command(SJ_102);
 }
 
-void gpio_setup(int floor) {
-  wiringPiSetup();
-
+void gpio_handler(int floor) {
   // floor = 0 -> ground
   // floor = 1 -> first
   if (floor == 0) {
@@ -111,6 +115,10 @@ void gpio_setup(int floor) {
 
     pinMode(SJ_102, OUTPUT);
     wiringPiISR(SJ_102, INT_EDGE_BOTH, &handle_window_2_first);
+  }
+
+  for (;;) {
+    sleep(1);
   }
 }
 

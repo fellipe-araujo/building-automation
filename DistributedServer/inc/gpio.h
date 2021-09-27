@@ -27,8 +27,9 @@
 #define SJ_101 5
 #define SJ_102 4
 
+void gpio_setup();
 int device_exist(int device);
-void gpio_setup(int floor);
+void gpio_handler(int floor);
 void change_device_state(int device, int state);
 void disable_output_devices();
 
