@@ -5,7 +5,6 @@
 #include "socket_tcp.h"
 
 void finish(int signal) {
-  close_server_socket();
   disable_output_devices();
   printf("Finzalização completa . . .\n");
   exit(0);
