@@ -15,11 +15,11 @@ void* play() {
 }
 
 void alarm_handler() {
-  DevicesIn dev_in = recover_devices_in_data();
+  DevicesOut dev_out = recover_devices_in_data();
 
   // Alarm active
-  if (dev_in.alarm == 1) {
-    dev_in.alarm_playing = 1;
+  if (dev_out.alarm == 1) {
+    dev_out.alarm_playing = 1;
     playing = 1;
     pthread_t alarm;
     pthread_create(&alarm, NULL, (void *)play, (void *)NULL);

@@ -2,6 +2,22 @@
 #define DATA_H_
 
 #include "app.h"
+#include "alarm.h"
+#include "socket_tcp.h"
+
+typedef struct {
+  int ls_t01;
+  int ls_t02;
+  int lc_t;
+  int ac_t;
+  int asp;
+  int ls_101;
+  int ls_102;
+  int lc_1;
+  int ac_1;
+  int alarm;
+  int alarm_playing;
+} DevicesOut;
 
 typedef struct {
   int sp_t;
@@ -15,21 +31,7 @@ typedef struct {
   int sf_1;
   int sj_101;
   int sj_102;
-  int alarm;
-  int alarm_playing;
 } DevicesIn;
-
-typedef struct {
-  int ls_t01;
-  int ls_t02;
-  int lc_t;
-  int ac_t;
-  int asp;
-  int ls_101;
-  int ls_102;
-  int lc_1;
-  int ac_1;
-} DevicesOut;
 
 typedef struct {
   float temperature;
@@ -43,6 +45,6 @@ typedef struct {
 
 void data_init();
 void devices_out_handler(int command);
-DevicesIn recover_devices_in_data();
+DevicesOut recover_devices_in_data();
 
 #endif
