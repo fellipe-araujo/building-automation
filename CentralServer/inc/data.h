@@ -4,29 +4,31 @@
 #include "app.h"
 
 typedef struct {
-  int SP_T;
-  int SF_T;
-  int SJ_T01;
-  int SJ_T02;
-  int SPo_T;
-  int SC_IN;
-  int SC_OUT;
-  int SP_1;
-  int SF_1;
-  int SJ_101;
-  int SJ_102;
+  int sp_t;
+  int sf_t;
+  int sj_t01;
+  int sj_t02;
+  int spo_T;
+  int sc_in;
+  int sc_out;
+  int sp_1;
+  int sf_1;
+  int sj_101;
+  int sj_102;
+  int alarm;
+  int alarm_playing;
 } DevicesIn;
 
 typedef struct {
-  int LS_T01;
-  int LS_T02;
-  int LC_T;
-  int AC_T;
-  int ASP;
-  int LS_101;
-  int LS_102;
-  int LC_1;
-  int AC_1;
+  int ls_t01;
+  int ls_t02;
+  int lc_t;
+  int ac_t;
+  int asp;
+  int ls_101;
+  int ls_102;
+  int lc_1;
+  int ac_1;
 } DevicesOut;
 
 typedef struct {
@@ -38,5 +40,9 @@ typedef struct {
   DHT22 dht22;
   DevicesOut dev_out;
 } Data;
+
+void data_init();
+void devices_out_handler(int command);
+DevicesIn recover_devices_in_data();
 
 #endif
