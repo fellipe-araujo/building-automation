@@ -129,3 +129,52 @@ void print_data(Data data) {
 
   wrefresh(window);
 }
+
+void print_devices_in(DevicesIn dev_in) {
+  mvwprintw(window, 4, 50, "Térreo - Sensor de Presença:");
+	wattron(window, COLOR_PAIR(dev_in.sp_t == 1 ? 3 : 2));
+	mvwprintw(window, 4, 89, dev_in.sp_t == 1 ? "ON" : "OFF");
+	wattroff(window, COLOR_PAIR(dev_in.sp_t == 1 ? 3 : 2));
+
+  mvwprintw(window, 5, 50, "Térreo - Sensor de Fumaça:");
+	wattron(window, COLOR_PAIR(dev_in.sf_t == 1 ? 3 : 2));
+	mvwprintw(window, 5, 89, dev_in.sf_t == 1 ? "ON" : "OFF");
+	wattroff(window, COLOR_PAIR(dev_in.sf_t == 1 ? 3 : 2));
+
+  mvwprintw(window, 6, 50, "Térreo - Sensor de Janela 01:");
+	wattron(window, COLOR_PAIR(dev_in.sj_t01 == 1 ? 3 : 2));
+	mvwprintw(window, 6, 89, dev_in.sj_t01 == 1 ? "ON" : "OFF");
+	wattroff(window, COLOR_PAIR(dev_in.sj_t01 == 1 ? 3 : 2));
+
+  mvwprintw(window, 7, 50, "Térreo - Sensor de Janela 02:");
+	wattron(window, COLOR_PAIR(dev_in.sj_t02 == 1 ? 3 : 2));
+	mvwprintw(window, 7, 89, dev_in.sj_t02 == 1 ? "ON" : "OFF");
+	wattroff(window, COLOR_PAIR(dev_in.sj_t02 == 1 ? 3 : 2));
+
+  mvwprintw(window, 8, 50, "Térreo - Sensor de Porta:");
+	wattron(window, COLOR_PAIR(dev_in.spo_T == 1 ? 3 : 2));
+	mvwprintw(window, 8, 89, dev_in.spo_T == 1 ? "ON" : "OFF");
+	wattroff(window, COLOR_PAIR(dev_in.spo_T == 1 ? 3 : 2));
+
+  mvwprintw(window, 9, 50, "Primeiro Andar - Sensor de Presença:");
+	wattron(window, COLOR_PAIR(dev_in.sp_1 == 1 ? 3 : 2));
+	mvwprintw(window, 9, 90, dev_in.sp_1 == 1 ? "ON" : "OFF");
+	wattroff(window, COLOR_PAIR(dev_in.sp_1 == 1 ? 3 : 2));
+
+  mvwprintw(window, 10, 50, "Primeiro Andar - Sensor de Fumaça:");
+	wattron(window, COLOR_PAIR(dev_in.sf_1 == 1 ? 3 : 2));
+	mvwprintw(window, 10, 90, dev_in.sf_1 == 1 ? "ON" : "OFF");
+	wattroff(window, COLOR_PAIR(dev_in.sf_1 == 1 ? 3 : 2));
+
+  mvwprintw(window, 11, 50, "Primeiro Andar - Sensor de Janela 101:");
+	wattron(window, COLOR_PAIR(dev_in.sj_101 == 1 ? 3 : 2));
+	mvwprintw(window, 11, 89, dev_in.sj_101 == 1 ? "ON" : "OFF");
+	wattroff(window, COLOR_PAIR(dev_in.sj_101 == 1 ? 3 : 2));
+
+  mvwprintw(window, 12, 50, "Primeiro Andar - Sensor de Janela 102:");
+	wattron(window, COLOR_PAIR(dev_in.sj_102 == 1 ? 3 : 2));
+	mvwprintw(window, 12, 89, dev_in.sj_102 == 1 ? "ON" : "OFF");
+	wattroff(window, COLOR_PAIR(dev_in.sj_102 == 1 ? 3 : 2));
+
+  wrefresh(window);
+}
