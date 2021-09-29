@@ -115,7 +115,7 @@ void devices_in_handler(int command) {
   // Print _dev_in
 }
 
-void store_devices_in_update(DevicesOut dev_out) {
+void store_devices_out_update(DevicesOut dev_out) {
   if (dev_out.alarm == 0) {
     dev_out.alarm_playing = 0;
     alarm_off();
@@ -183,6 +183,6 @@ void store_devices_in_update(DevicesOut dev_out) {
   }
 }
 
-DevicesOut recover_devices_in_data() {
+DevicesOut recover_devices_out_data() {
   return _dev_out;
 }
