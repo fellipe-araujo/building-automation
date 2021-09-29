@@ -60,7 +60,7 @@ void* recv_message() {
 
 int send_command(int device, int state, int floor) {
   struct sockaddr_in client_addr;
-  int socket_id = socket(AF_INET, SOCK_STREAM, 0);
+  int socket_id = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 
   if (socket_id == -1) {
     char *message = "ERRO NO SOCKET: Você deve inicializar o servidor distribuído! (code: 1)";
