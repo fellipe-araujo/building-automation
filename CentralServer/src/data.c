@@ -1,17 +1,5 @@
 #include "data.h"
 
-#define SP_T 26
-#define SF_T 23
-#define SJ_T01 9
-#define SJ_T02 11
-#define SPo_T 10
-#define SC_IN 13
-#define SC_OUT 19
-#define SP_1 18
-#define SF_1 24
-#define SJ_101 5
-#define SJ_102 4
-
 DevicesOut _dev_out;
 DevicesIn _dev_in;
 
@@ -144,39 +132,39 @@ void store_devices_out_update(DevicesOut dev_out) {
 
   int res = 1;
   if (dev_out.ls_t01 != _dev_out.ls_t01) {
-    res = send_command(SP_T, dev_out.ls_t01);
+    res = send_command(LS_T01, dev_out.ls_t01, 0);
   }
 
   if (dev_out.ls_t02 != _dev_out.ls_t02) {
-    res = send_command(SP_T, dev_out.ls_t02);
+    res = send_command(LS_T02, dev_out.ls_t02, 0);
   }
 
   if (dev_out.lc_t != _dev_out.lc_t) {
-    res = send_command(SP_T, dev_out.lc_t);
+    res = send_command(LC_T, dev_out.lc_t, 0);
   }
 
   if (dev_out.ac_t != _dev_out.ac_t) {
-    res = send_command(SP_T, dev_out.ac_t);
+    res = send_command(AC_T, dev_out.ac_t, 0);
   }
 
   if (dev_out.asp != _dev_out.asp) {
-    res = send_command(SP_T, dev_out.asp);
+    res = send_command(ASP, dev_out.asp, 0);
   }
 
   if (dev_out.ls_101 != _dev_out.ls_101) {
-    res = send_command(SP_T, dev_out.ls_101);
+    res = send_command(LS_101, dev_out.ls_101, 1);
   }
 
   if (dev_out.ls_102 != _dev_out.ls_102) {
-    res = send_command(SP_T, dev_out.ls_102);
+    res = send_command(LS_102, dev_out.ls_102, 1);
   }
 
   if (dev_out.lc_1 != _dev_out.lc_1) {
-    res = send_command(SP_T, dev_out.lc_1);
+    res = send_command(LC_1, dev_out.lc_1, 1);
   }
 
   if (dev_out.ac_1 != _dev_out.ac_1) {
-    res = send_command(SP_T, dev_out.ac_1);
+    res = send_command(AC_1, dev_out.ac_1, 1);
   }
 
   if (res == 1) {
