@@ -20,9 +20,12 @@ void quit_setup() {
 void quit_handler(char *message) {
   refresh();
   endwin();
+
   int len = strlen(message);
+
   if (len > 0) {
     printf("%s\n", message);
   }
+
   exit(0);
 }

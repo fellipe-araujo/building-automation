@@ -42,8 +42,8 @@ void data_init() {
 
   Data data = current_data();
   data.dev_out = _dev_out;
-  // Print data
-  // Print _dev_in
+  print_data(data);
+  print_devices_in(_dev_in);
 }
 
 void devices_in_handler(int command) {
@@ -110,9 +110,10 @@ void devices_in_handler(int command) {
     _dev_out.alarm_playing = 0;
     alarm_off();
     data.dev_out = _dev_out;
-    // Print data
+    print_data(data);
   }
-  // Print _dev_in
+  
+  print_devices_in(_dev_in);
 }
 
 void store_devices_out_update(DevicesOut dev_out) {
@@ -139,7 +140,7 @@ void store_devices_out_update(DevicesOut dev_out) {
 
   Data data = current_data();
   data.dev_out = dev_out;
-  // Print data
+  print_data(data);
 
   int res = 1;
   if (dev_out.ls_t01 != _dev_out.ls_t01) {
