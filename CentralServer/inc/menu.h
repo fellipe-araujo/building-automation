@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <ncurses.h>
 #include "data.h"
+#include "socket_quit.h"
 
 void print_menu(WINDOW *window, int highlight);
 void clear_menu(WINDOW *window_param);

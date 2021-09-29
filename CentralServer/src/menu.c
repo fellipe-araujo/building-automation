@@ -1,5 +1,6 @@
 #include "menu.h"
 #include "data.h"
+#include "csv.h"
 
 #define WIDTH 94
 #define HEIGHT 28
@@ -177,4 +178,156 @@ void print_devices_in(DevicesIn dev_in) {
 	wattroff(window, COLOR_PAIR(dev_in.sj_102 == 1 ? 3 : 2));
 
   wrefresh(window);
+}
+
+void* menu_handler() {
+	int highlight = 1;
+	int choice = 0;
+	int c;
+
+	initscr();
+	start_color(); 
+	clear();
+	noecho();
+	cbreak();
+	curs_set(0);
+	init_pair(1, COLOR_CYAN, COLOR_BLACK);
+	init_pair(2, COLOR_RED, COLOR_BLACK);
+	init_pair(3, COLOR_GREEN, COLOR_BLACK);
+	init_pair(4, COLOR_MAGENTA, COLOR_BLACK);
+     
+	window = newwin(HEIGHT, WIDTH, starty, startx);
+	keypad(window, TRUE);
+	refresh();
+
+	data_init();
+
+	do {
+		print_menu(window, highlight);
+		c = wgetch(window);
+
+		switch(c) {
+			case KEY_UP:
+				if(highlight == 1)
+					highlight = n_choices;
+				else
+					--highlight;
+				break;
+			case KEY_DOWN:
+				if(highlight == n_choices)
+					highlight = 1;
+				else
+					++highlight;
+				break;
+			case 10:    
+				choice = highlight;
+
+				DevicesOut dev_out = recover_devices_out_data();
+
+				if (choice == 1) {
+					dev_out.ls_t01 = dev_out.ls_t01 == 1 ? 0 : 1;
+					char *device = "Térreo - Lâmpada da Sala 01";
+					Command command;
+					command.device = device;
+					command.state = dev_out.ls_t01;
+					write_data(command);
+				}
+
+				if (choice == 2) {
+					dev_out.ls_t02 = dev_out.ls_t02 == 1 ? 0 : 1;
+					char *device = "Térreo - Lâmpada da Sala 02";
+					Command command;
+					command.device = device;
+					command.state = dev_out.ls_t02;
+					write_data(command);
+				}
+
+				if (choice == 3) {
+					dev_out.lc_t = dev_out.lc_t == 1 ? 0 : 1;
+					char *device = "Térreo - Lâmpadas do Corredor";
+					Command command;
+					command.device = device;
+					command.state = dev_out.lc_t;
+					write_data(command);
+				}
+
+				if (choice == 4) {
+					dev_out.ac_t = dev_out.ac_t == 1 ? 0 : 1;
+					char *device = "Térreo - Ar-Condicionado";
+					Command command;
+					command.device = device;
+					command.state = dev_out.ac_t;
+					write_data(command);
+				}
+
+				if (choice == 5) {
+					dev_out.asp = dev_out.asp == 1 ? 0 : 1;
+					char *device = "Térreo - Aspersores de Agua";
+					Command command;
+					command.device = device;
+					command.state = dev_out.asp;
+					write_data(command);
+				}
+
+				if (choice == 6) {
+					dev_out.ls_101 = dev_out.ls_101 == 1 ? 0 : 1;
+					char *device = "Primeiro Andar - Lâmpada da Sala 101";
+					Command command;
+					command.device = device;
+					command.state = dev_out.ls_101;
+					write_data(command);
+				}
+
+				if (choice == 7) {
+					dev_out.ls_102 = dev_out.ls_102 == 1 ? 0 : 1;
+					char *device = "Primeiro Andar - Lâmpada da Sala 102";
+					Command command;
+					command.device = device;
+					command.state = dev_out.ls_102;
+					write_data(command);
+				}
+
+				if (choice == 8) {
+					dev_out.lc_1 = dev_out.lc_1 == 1 ? 0 : 1;
+					char *device = "Primeiro Andar - Lâmpadas do Corredor";
+					Command command;
+					command.device = device;
+					command.state = dev_out.lc_1;
+					write_data(command);
+				}
+
+				if (choice == 9) {
+					dev_out.ac_1 = dev_out.ac_1 == 1 ? 0 : 1;
+					char *device = "Primeiro Andar - Ar-Condicionado";
+					Command command;
+					command.device = device;
+					command.state = dev_out.ac_1;
+					write_data(command);
+				}
+
+				if (choice == 10) {
+					dev_out.alarm = dev_out.alarm == 1 ? 0 : 1;
+					char *device = "Ativar o Alarme";
+					Command command;
+					command.device = device;
+					command.state = dev_out.alarm;
+					write_data(command);
+				}
+
+				store_devices_out_update(dev_out);
+
+				if (choice == 11) {
+					char *message = "Finalizando. . .";
+					quit_handler(message);
+				}
+
+				break;
+
+			default:
+				refresh();
+				break;
+		}
+	} while(1);
+
+	return NULL;
 }
