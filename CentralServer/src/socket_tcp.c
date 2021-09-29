@@ -30,7 +30,8 @@ void* recv_message() {
 	bind(socket_id, (struct sockaddr*) &server_addr, sizeof(server_addr));
 
 	if (listen(socket_id, 10) == -1) {
-		finishWithError(0);
+		char *message = "ERRO NO LISTEN!";
+		quit_handler(message);
 	}
 
   while (1) {
@@ -41,14 +42,15 @@ void* recv_message() {
 	  int size = recv(client_socket, buffer, 16, 0);
 
     if (size < 0) {
-      finishWithError(0);
+      char *message = "ERRO: Messagem recebida com o tamanho menor do que o esperado!";
+      quit_handler(message);
     }
     
     buffer[15] = '\0';
 
 		int command;
 		sscanf(buffer, "%d", &command);
-    devices_out_handler(command);
+    devices_in_handler(command);
 		
 		close(client_socket);
   }
@@ -58,10 +60,11 @@ void* recv_message() {
 
 int send_command(int device, int state, int floor) {
   struct sockaddr_in client_addr;
-
   int socket_id = socket(AF_INET, SOCK_STREAM, 0);
+
   if (socket_id == -1) {
-    finishWithError(0);
+    char *message = "ERRO NO SOCKET: Você deve inicializar o servidor distribuído! (code: 1)";
+    quit_handler(message);
   }
 
   client_addr.sin_family = AF_INET;
@@ -69,7 +72,8 @@ int send_command(int device, int state, int floor) {
   client_addr.sin_port = htons(floor == 0 ? SERVER_DISTRIBUTED_1_PORT : SERVER_DISTRIBUTED_2_PORT);
 
   if (connect(socket_id, (struct sockaddr*) &client_addr, sizeof(client_addr)) < 0) {
-    finishWithError(0);
+    char *message = "ERROR NO CONNECT: Você deve inicializar o sistema distribuído! (code: 2)";
+    quit_handler(message);
   }
 
   char buf[6];
@@ -79,14 +83,16 @@ int send_command(int device, int state, int floor) {
   int size = strlen(buf);
 
   if (send(socket_id, buf, size, 0) != size) {
-		finishWithError(0);
+		char *message = "ERROR NO SEND: Você deve inicializar o sistema distribuído! (code: 3)";
+    quit_handler(message);
   }
 
   char buffer[16];
   int size_rec = recv(socket_id, buffer, 16, 0);
 
   if (size_rec < 0) {
-    finishWithError(0);
+    char *message = "ERROR NO RECV: Você deve inicializar o sistema distribuído! (code: 4)";
+    quit_handler(message);
   }
 
   buffer[15] = '\0';
