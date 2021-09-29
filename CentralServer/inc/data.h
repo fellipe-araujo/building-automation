@@ -34,14 +34,13 @@ typedef struct {
 } DevicesIn;
 
 typedef struct {
-  float ground_floor_temperature;
-  float ground_floor_humidity;
-  float first_floor_temperature;
-  float first_floor_humidity;
+  float temperature;
+  float humidity;
 } DHT22;
 
 typedef struct {
-  DHT22 dht22;
+  DHT22 dht22_ground_floor;
+  DHT22 dht22_first_floor;
   DevicesOut dev_out;
 } Data;
 

@@ -102,20 +102,20 @@ void print_data(Data data) {
 
   mvwprintw(window, 19, 2, "Temperatura - Térreo: ");
   wattron(window, COLOR_PAIR(1));
-  mvwprintw(window, 19, 25, "%4.2f", data.dht22.ground_floor_temperature);
+  mvwprintw(window, 19, 25, "%4.2f", data.dht22_ground_floor.temperature);
 	wattroff(window, COLOR_PAIR(1));
   mvwprintw(window, 20, 2, "Umidade     - Térreo: ");
 	wattron(window, COLOR_PAIR(1));
-  mvwprintw(window, 20, 25, "%4.2f", data.dht22.ground_floor_humidity);
+  mvwprintw(window, 20, 25, "%4.2f", data.dht22_ground_floor.humidity);
 	wattroff(window, COLOR_PAIR(1));
 
   mvwprintw(window, 19, 40, "Temperatura - Primeiro Andar: ");
   wattron(window, COLOR_PAIR(1));
-  mvwprintw(window, 19, 70, "%4.2f", data.dht22.first_floor_temperature);
+  mvwprintw(window, 19, 70, "%4.2f", data.dht22_first_floor.temperature);
 	wattroff(window, COLOR_PAIR(1));
   mvwprintw(window, 20, 40, "Umidade     - Primeiro Andar: ");
 	wattron(window, COLOR_PAIR(1));
-  mvwprintw(window, 20, 70, "%4.2f", data.dht22.first_floor_humidity);
+  mvwprintw(window, 20, 70, "%4.2f", data.dht22_first_floor.humidity);
 	wattroff(window, COLOR_PAIR(1));
 
 	mvwprintw(window, 25, 2, "Alarme Tocando: ");
