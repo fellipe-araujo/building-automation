@@ -16,3 +16,13 @@ void quit_setup() {
   signal(SIGINT, finish);
   signal(SIGPIPE, finishWithError);
 }
+
+void quit_handler(char *message) {
+  refresh();
+  endwin();
+  int len = strlen(message);
+  if (len > 0) {
+    printf("%s\n", message);
+  }
+  exit(0);
+}
