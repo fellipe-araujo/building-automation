@@ -10,9 +10,10 @@
 
 #define SERVER_CENTRAL_IP "192.168.0.53"
 #define SERVER_CENTRAL_PORT 10011
-#define SERVER_DISTRIBUTED_PORT 10111
+#define SERVER_DISTRIBUTED_1_PORT 10111
+#define SERVER_DISTRIBUTED_2_PORT 10211
 
-void* server_handler() {
+void* server_handler(int floor) {
   struct sockaddr_in server_addr;
   struct sockaddr_in client_addr;
 
@@ -26,7 +27,7 @@ void* server_handler() {
   memset(&server_addr, 0, sizeof(server_addr));
   server_addr.sin_family = AF_INET;
   server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-  server_addr.sin_port = htons(SERVER_DISTRIBUTED_PORT);
+  server_addr.sin_port = htons(floor == 0 ? SERVER_DISTRIBUTED_1_PORT : SERVER_DISTRIBUTED_2_PORT);
 
   if (bind(socket_id, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0) {
     printf("Falha no Bind\n");
@@ -113,7 +114,7 @@ void* server_handler() {
 void send_command(int command) {
   struct sockaddr_in client_addr;
   int socket_id = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-  char message[LEN];
+  char message[16];
 
   sprintf(message, "%d", command);
 
