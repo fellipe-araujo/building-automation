@@ -180,6 +180,28 @@ void print_devices_in(DevicesIn dev_in) {
   wrefresh(window);
 }
 
+void print_header() {
+	wattron(window, COLOR_PAIR(4));
+	mvwprintw(window, 2, 15, "DISPOSITIVOS DE SAIDA");
+	wattroff(window, COLOR_PAIR(4));
+
+	wattron(window, COLOR_PAIR(4));
+	mvwprintw(window, 2, 61, "DISPOSITIVOS DE ENTRADA");
+	wattroff(window, COLOR_PAIR(4));
+
+	wattron(window, COLOR_PAIR(4));
+	mvwprintw(window, 17, 37, "TEMPERATURA E UMIDADE");
+	wattroff(window, COLOR_PAIR(4));
+
+	wattron(window, COLOR_PAIR(4));
+	mvwprintw(window, 23, 13, "ALARME");
+	wattroff(window, COLOR_PAIR(4));
+
+	wattron(window, COLOR_PAIR(4));
+	mvwprintw(window, 23, 57, "QUANTIDADE DE PESSOAS");
+	wattroff(window, COLOR_PAIR(4));
+}
+
 void* menu_handler() {
 	int highlight = 1;
 	int choice = 0;
@@ -203,6 +225,7 @@ void* menu_handler() {
 	data_init();
 
 	do {
+		print_header();
 		print_menu(window, highlight);
 		c = wgetch(window);
 
