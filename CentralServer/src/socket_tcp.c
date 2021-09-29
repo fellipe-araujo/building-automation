@@ -1,7 +1,19 @@
-#include "socket_tcp.h"
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <sys/types.h>
+#include <fcntl.h>
+#include "data.h"
+#include "alarm.h"
+#include "socket_quit.h"
 
 #define SERVER_DISTRIBUTED_IP "192.168.0.52"
-#define SERVER_DISTRIBUTED_PORT 10111
+#define SERVER_DISTRIBUTED_1_PORT 10111
+#define SERVER_DISTRIBUTED_2_PORT 10211
 #define SERVER_CENTRAL_PORT 10011
 
 void* recv_message() {
@@ -44,7 +56,7 @@ void* recv_message() {
 	close(socket_id);
 }
 
-int send_command(int item, int status) {
+int send_command(int device, int state, int floor) {
   struct sockaddr_in client_addr;
 
   int socket_id = socket(AF_INET, SOCK_STREAM, 0);
@@ -54,14 +66,16 @@ int send_command(int item, int status) {
 
   client_addr.sin_family = AF_INET;
   client_addr.sin_addr.s_addr = inet_addr(SERVER_DISTRIBUTED_IP);
-  client_addr.sin_port = htons(SERVER_DISTRIBUTED_PORT);
+  client_addr.sin_port = htons(floor == 0 ? SERVER_DISTRIBUTED_1_PORT : SERVER_DISTRIBUTED_2_PORT);
 
   if (connect(socket_id, (struct sockaddr*) &client_addr, sizeof(client_addr)) < 0) {
     finishWithError(0);
   }
 
   char buf[6];
-  snprintf(buf, 6, "%d %d %d", 1, item, status);
+
+  // command = 1 | device | state
+  snprintf(buf, 6, "%d %d %d", 1, device, state);
   int size = strlen(buf);
 
   if (send(socket_id, buf, size, 0) != size) {
@@ -85,7 +99,7 @@ int send_command(int item, int status) {
   return res;
 }
 
-DHT22 request_data() {
+DHT22 request_data(int floor) {
   struct sockaddr_in client_addr;
 
   DHT22 dht22;
@@ -100,13 +114,15 @@ DHT22 request_data() {
 
   client_addr.sin_family = AF_INET;
   client_addr.sin_addr.s_addr = inet_addr(SERVER_DISTRIBUTED_IP);
-  client_addr.sin_port = htons(SERVER_DISTRIBUTED_PORT);
+  client_addr.sin_port = htons(floor == 0 ? SERVER_DISTRIBUTED_1_PORT : SERVER_DISTRIBUTED_2_PORT);
 
   if (connect(socket_id, (struct sockaddr*) &client_addr, sizeof(client_addr)) < 0) {
     return dht22;
   }
 
   char buf[2];
+
+  // command = 2
   snprintf(buf, 2, "%d", 2);
   int size = strlen(buf);
 
