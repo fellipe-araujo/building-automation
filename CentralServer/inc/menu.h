@@ -10,5 +10,7 @@
 void print_menu(WINDOW *window, int highlight);
 void clear_menu(WINDOW *window_param);
 void print_data(Data data);
+void print_devices_in(DevicesIn dev_in);
+void* menu_handler();
 
 #endif

@@ -15,7 +15,7 @@ void* play() {
 }
 
 void alarm_handler() {
-  DevicesOut dev_out = recover_devices_in_data();
+  DevicesOut dev_out = recover_devices_out_data();
 
   // Alarm active
   if (dev_out.alarm == 1) {
