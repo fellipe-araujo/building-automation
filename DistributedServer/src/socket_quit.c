@@ -5,18 +5,11 @@
 
 #include "gpio.h"
 
-void finish(int signal) {
+void quit_handler() {
   disable_output_devices();
-  printf("Finzalização completa . . .\n");
-  exit(0);
-}
-
-void finishWithError(int signal) {
-  printf("Erro no socket. . .\n");
-  finish(0);
+  exit(1);
 }
 
 void quit_setup() {
-  signal(SIGINT, finish);
-  signal(SIGPIPE, finishWithError);
+  signal(SIGINT, quit_handler);
 }
