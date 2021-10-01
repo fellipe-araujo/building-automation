@@ -6,7 +6,7 @@
 #include <pthread.h>
 #include <unistd.h>
 
-#include "socket_tcp.h"
+#include "server_tcp.h"
 #include "socket_quit.h"
 #include "gpio.h"
 #include "dht22.h"

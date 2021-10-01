@@ -1,6 +1,11 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <ncurses.h>
+
 #include "menu.h"
 #include "data.h"
 #include "csv.h"
+#include "socket_quit.h"
 
 #define WIDTH 94
 #define HEIGHT 28

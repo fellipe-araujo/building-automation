@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include <pthread.h>
 
-#include <app.h>
-#include <socket_quit.h>
-#include <menu.h>
-#include <data.h>
-#include <socket_tcp.h>
-#include <csv.h>
+#include "app.h"
+#include "socket_quit.h"
+#include "menu.h"
+#include "data.h"
+#include "server_tcp.h"
+#include "csv.h"
 
 int main() {
   quit_setup();

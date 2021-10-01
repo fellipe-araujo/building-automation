@@ -3,7 +3,7 @@
 #include <unistd.h>
 
 #include "menu.h"
-#include "socket_tcp.h"
+#include "client_tcp.h"
 #include "data.h"
 
 #define TIME_SLEEP 1000000

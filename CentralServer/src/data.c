@@ -1,4 +1,10 @@
+#include <stdio.h>
+
 #include "data.h"
+#include "menu.h"
+#include "alarm.h"
+#include "client_tcp.h"
+#include "app.h"
 
 DevicesOut _dev_out;
 DevicesIn _dev_in;

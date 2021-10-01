@@ -1,10 +1,10 @@
 #ifndef DATA_H_
 #define DATA_H_
 
-#include "app.h"
-#include "alarm.h"
-#include "socket_tcp.h"
-#include "menu.h"
+#define LS_T01 7
+#define LS_T02 0
+#define LC_T 2
+#define AC_T 11
 
 #define LS_T01 4
 #define LS_T02 17

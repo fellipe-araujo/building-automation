@@ -1,5 +1,7 @@
+#include <stdio.h>
+#include <unistd.h>
 #include "gpio.h"
-#include "socket_tcp.h"
+#include "client_tcp.h"
 
 void gpio_setup() {
   wiringPiSetup();

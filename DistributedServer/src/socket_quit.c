@@ -1,8 +1,9 @@
 #include <stdio.h>
-#include <signal.h>
 #include <stdlib.h>
+#include <string.h>
+#include <signal.h>
+
 #include "gpio.h"
-#include "socket_tcp.h"
 
 void finish(int signal) {
   disable_output_devices();
