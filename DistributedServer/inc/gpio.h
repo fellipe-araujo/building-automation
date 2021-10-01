@@ -26,7 +26,7 @@
     * 18 -> 01 | Sensor de Presença
     * 24 -> 05 | Sensor de Fumaça
     * 05 -> 21 | Sensor de Janela 101
-    * 04 -> 07 | Sensor de Janela 102
+    * 06 -> 22 | Sensor de Janela 102
 */
 
 // Ground Floor
@@ -51,7 +51,7 @@
 #define SP_1 1
 #define SF_1 5
 #define SJ_101 21
-#define SJ_102 7
+#define SJ_102 22
 
 void gpio_setup();
 int device_exist(int device);
