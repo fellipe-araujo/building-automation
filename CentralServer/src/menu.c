@@ -13,14 +13,14 @@
 WINDOW *window;
 
 char *choices[] = {
-	"Térreo - Lâmpada da Sala 01:",
-	"Térreo - Lâmpada da Sala 02:",
-	"Térreo - Lâmpadas do Corredor:",
-	"Térreo - Ar-Condicionado:",
-	"Térreo - Aspersores de Agua:",
-  "Primeiro Andar - Lâmpada da Sala 101:",
-  "Primeiro Andar - Lâmpada da Sala 102:",
-  "Primeiro Andar - Lâmpadas do Corredor:",
+	"Terreo - Lampada da Sala 01:",
+	"Terreo - Lampada da Sala 02:",
+	"Terreo - Lampadas do Corredor:",
+	"Terreo - Ar-Condicionado:",
+	"Terreo - Aspersores de Agua:",
+  "Primeiro Andar - Lampada da Sala 101:",
+  "Primeiro Andar - Lampada da Sala 102:",
+  "Primeiro Andar - Lampadas do Corredor:",
   "Primeiro Andar - Ar-Condicionado:",
   "Ativar o Alarme:",
   "Sair",
@@ -105,11 +105,11 @@ void print_data(Data data) {
 	mvwprintw(window, 13, 41, data.dev_out.alarm == 1 ? "ON " : "OFF");
 	wattroff(window, COLOR_PAIR(data.dev_out.alarm == 1 ? 3 : 2));
 
-  mvwprintw(window, 19, 2, "Temperatura - Térreo: ");
+  mvwprintw(window, 19, 2, "Temperatura - Terreo: ");
   wattron(window, COLOR_PAIR(1));
   mvwprintw(window, 19, 25, "%4.2f", data.dht22_ground_floor.temperature);
 	wattroff(window, COLOR_PAIR(1));
-  mvwprintw(window, 20, 2, "Umidade     - Térreo: ");
+  mvwprintw(window, 20, 2, "Umidade     - Terreo: ");
 	wattron(window, COLOR_PAIR(1));
   mvwprintw(window, 20, 25, "%4.2f", data.dht22_ground_floor.humidity);
 	wattroff(window, COLOR_PAIR(1));
@@ -125,61 +125,61 @@ void print_data(Data data) {
 
 	mvwprintw(window, 25, 2, "Alarme Tocando: ");
   wattron(window, COLOR_PAIR(data.dev_out.alarm_playing == 1 ? 3 : 2));
-	mvwprintw(window, 25, 18, "%s", data.dev_out.alarm_playing == 1 ? "SIM" : "NAO");
+	mvwprintw(window, 25, 18, data.dev_out.alarm_playing == 1 ? "SIM" : "NAO");
 	wattroff(window, COLOR_PAIR(data.dev_out.alarm_playing == 1 ? 3 : 2));
 
 	mvwprintw(window, 25, 50, "Pessoas: ");
   wattron(window, COLOR_PAIR(1));
-	mvwprintw(window, 25, 59, "%s", "0");
+	mvwprintw(window, 25, 59, "0");
 	wattroff(window, COLOR_PAIR(1));
 
   wrefresh(window);
 }
 
 void print_devices_in(DevicesIn dev_in) {
-  mvwprintw(window, 4, 50, "Térreo - Sensor de Presença:");
+  mvwprintw(window, 4, 50, "Terreo - Sensor de Presenca:");
 	wattron(window, COLOR_PAIR(dev_in.sp_t == 1 ? 3 : 2));
-	mvwprintw(window, 4, 89, dev_in.sp_t == 1 ? "ON" : "OFF");
+	mvwprintw(window, 4, 89, dev_in.sp_t == 1 ? "ON " : "OFF");
 	wattroff(window, COLOR_PAIR(dev_in.sp_t == 1 ? 3 : 2));
 
-  mvwprintw(window, 5, 50, "Térreo - Sensor de Fumaça:");
+  mvwprintw(window, 5, 50, "Terreo - Sensor de Fumaca:");
 	wattron(window, COLOR_PAIR(dev_in.sf_t == 1 ? 3 : 2));
-	mvwprintw(window, 5, 89, dev_in.sf_t == 1 ? "ON" : "OFF");
+	mvwprintw(window, 5, 89, dev_in.sf_t == 1 ? "ON " : "OFF");
 	wattroff(window, COLOR_PAIR(dev_in.sf_t == 1 ? 3 : 2));
 
-  mvwprintw(window, 6, 50, "Térreo - Sensor de Janela 01:");
+  mvwprintw(window, 6, 50, "Terreo - Sensor de Janela 01:");
 	wattron(window, COLOR_PAIR(dev_in.sj_t01 == 1 ? 3 : 2));
-	mvwprintw(window, 6, 89, dev_in.sj_t01 == 1 ? "ON" : "OFF");
+	mvwprintw(window, 6, 89, dev_in.sj_t01 == 1 ? "ON " : "OFF");
 	wattroff(window, COLOR_PAIR(dev_in.sj_t01 == 1 ? 3 : 2));
 
-  mvwprintw(window, 7, 50, "Térreo - Sensor de Janela 02:");
+  mvwprintw(window, 7, 50, "Terreo - Sensor de Janela 02:");
 	wattron(window, COLOR_PAIR(dev_in.sj_t02 == 1 ? 3 : 2));
-	mvwprintw(window, 7, 89, dev_in.sj_t02 == 1 ? "ON" : "OFF");
+	mvwprintw(window, 7, 89, dev_in.sj_t02 == 1 ? "ON " : "OFF");
 	wattroff(window, COLOR_PAIR(dev_in.sj_t02 == 1 ? 3 : 2));
 
-  mvwprintw(window, 8, 50, "Térreo - Sensor de Porta:");
+  mvwprintw(window, 8, 50, "Terreo - Sensor de Porta:");
 	wattron(window, COLOR_PAIR(dev_in.spo_T == 1 ? 3 : 2));
-	mvwprintw(window, 8, 89, dev_in.spo_T == 1 ? "ON" : "OFF");
+	mvwprintw(window, 8, 89, dev_in.spo_T == 1 ? "ON " : "OFF");
 	wattroff(window, COLOR_PAIR(dev_in.spo_T == 1 ? 3 : 2));
 
-  mvwprintw(window, 9, 50, "Primeiro Andar - Sensor de Presença:");
+  mvwprintw(window, 9, 50, "Primeiro Andar - Sensor de Presenca:");
 	wattron(window, COLOR_PAIR(dev_in.sp_1 == 1 ? 3 : 2));
-	mvwprintw(window, 9, 90, dev_in.sp_1 == 1 ? "ON" : "OFF");
+	mvwprintw(window, 9, 89, dev_in.sp_1 == 1 ? "ON " : "OFF");
 	wattroff(window, COLOR_PAIR(dev_in.sp_1 == 1 ? 3 : 2));
 
-  mvwprintw(window, 10, 50, "Primeiro Andar - Sensor de Fumaça:");
+  mvwprintw(window, 10, 50, "Primeiro Andar - Sensor de Fumaca:");
 	wattron(window, COLOR_PAIR(dev_in.sf_1 == 1 ? 3 : 2));
-	mvwprintw(window, 10, 90, dev_in.sf_1 == 1 ? "ON" : "OFF");
+	mvwprintw(window, 10, 89, dev_in.sf_1 == 1 ? "ON " : "OFF");
 	wattroff(window, COLOR_PAIR(dev_in.sf_1 == 1 ? 3 : 2));
 
   mvwprintw(window, 11, 50, "Primeiro Andar - Sensor de Janela 101:");
 	wattron(window, COLOR_PAIR(dev_in.sj_101 == 1 ? 3 : 2));
-	mvwprintw(window, 11, 89, dev_in.sj_101 == 1 ? "ON" : "OFF");
+	mvwprintw(window, 11, 89, dev_in.sj_101 == 1 ? "ON " : "OFF");
 	wattroff(window, COLOR_PAIR(dev_in.sj_101 == 1 ? 3 : 2));
 
   mvwprintw(window, 12, 50, "Primeiro Andar - Sensor de Janela 102:");
 	wattron(window, COLOR_PAIR(dev_in.sj_102 == 1 ? 3 : 2));
-	mvwprintw(window, 12, 89, dev_in.sj_102 == 1 ? "ON" : "OFF");
+	mvwprintw(window, 12, 89, dev_in.sj_102 == 1 ? "ON " : "OFF");
 	wattroff(window, COLOR_PAIR(dev_in.sj_102 == 1 ? 3 : 2));
 
   wrefresh(window);
@@ -261,7 +261,7 @@ void* menu_handler() {
 					write_data(command);
 				}
 
-				if (choice == 2) {
+				else if (choice == 2) {
 					dev_out.ls_t02 = dev_out.ls_t02 == 1 ? 0 : 1;
 					char *device = "Térreo - Lâmpada da Sala 02";
 					Command command;
@@ -270,7 +270,7 @@ void* menu_handler() {
 					write_data(command);
 				}
 
-				if (choice == 3) {
+				else if (choice == 3) {
 					dev_out.lc_t = dev_out.lc_t == 1 ? 0 : 1;
 					char *device = "Térreo - Lâmpadas do Corredor";
 					Command command;
@@ -279,7 +279,7 @@ void* menu_handler() {
 					write_data(command);
 				}
 
-				if (choice == 4) {
+				else if (choice == 4) {
 					dev_out.ac_t = dev_out.ac_t == 1 ? 0 : 1;
 					char *device = "Térreo - Ar-Condicionado";
 					Command command;
@@ -288,7 +288,7 @@ void* menu_handler() {
 					write_data(command);
 				}
 
-				if (choice == 5) {
+				else if (choice == 5) {
 					dev_out.asp = dev_out.asp == 1 ? 0 : 1;
 					char *device = "Térreo - Aspersores de Agua";
 					Command command;
@@ -297,7 +297,7 @@ void* menu_handler() {
 					write_data(command);
 				}
 
-				if (choice == 6) {
+				else if (choice == 6) {
 					dev_out.ls_101 = dev_out.ls_101 == 1 ? 0 : 1;
 					char *device = "Primeiro Andar - Lâmpada da Sala 101";
 					Command command;
@@ -306,7 +306,7 @@ void* menu_handler() {
 					write_data(command);
 				}
 
-				if (choice == 7) {
+				else if (choice == 7) {
 					dev_out.ls_102 = dev_out.ls_102 == 1 ? 0 : 1;
 					char *device = "Primeiro Andar - Lâmpada da Sala 102";
 					Command command;
@@ -315,7 +315,7 @@ void* menu_handler() {
 					write_data(command);
 				}
 
-				if (choice == 8) {
+				else if (choice == 8) {
 					dev_out.lc_1 = dev_out.lc_1 == 1 ? 0 : 1;
 					char *device = "Primeiro Andar - Lâmpadas do Corredor";
 					Command command;
@@ -324,7 +324,7 @@ void* menu_handler() {
 					write_data(command);
 				}
 
-				if (choice == 9) {
+				else if (choice == 9) {
 					dev_out.ac_1 = dev_out.ac_1 == 1 ? 0 : 1;
 					char *device = "Primeiro Andar - Ar-Condicionado";
 					Command command;
@@ -333,7 +333,7 @@ void* menu_handler() {
 					write_data(command);
 				}
 
-				if (choice == 10) {
+				else if (choice == 10) {
 					dev_out.alarm = dev_out.alarm == 1 ? 0 : 1;
 					char *device = "Ativar o Alarme";
 					Command command;
