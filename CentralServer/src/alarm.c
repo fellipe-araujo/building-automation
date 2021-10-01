@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
+
 #include "alarm.h"
 #include "data.h"
 
@@ -23,6 +24,7 @@ void alarm_handler() {
     playing = 1;
     pthread_t alarm;
     pthread_create(&alarm, NULL, (void *)play, (void *)NULL);
+    store_devices_out_update(dev_out);
   }
 }
 
