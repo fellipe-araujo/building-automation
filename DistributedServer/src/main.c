@@ -1,12 +1,10 @@
 #include "main.h"
 
-void ground_floor() {
-  gpio_handler(0);
+void server_ground_floor() {
   server_handler(0);
 }
 
-void first_floor() {
-  gpio_handler(1);
+void server_first_floor() {
   server_handler(1);
 }
 
@@ -15,13 +13,17 @@ int main () {
   quit_setup();
   dht22_setup();
 
-  pthread_t tid[2];
+  disable_output_devices();
 
-  pthread_create(&tid[0], NULL, (void *)ground_floor, (void *)NULL);
-  pthread_create(&tid[1], NULL, (void *)first_floor, (void *)NULL);
+  pthread_t tid[3];
+
+  pthread_create(&tid[0], NULL, (void *)gpio_handler, (void *)NULL);
+  pthread_create(&tid[1], NULL, (void *)server_ground_floor, (void *)NULL);
+  pthread_create(&tid[2], NULL, (void *)server_first_floor, (void *)NULL);
 
   pthread_join(tid[0], NULL);
 	pthread_join(tid[1], NULL);
+	pthread_join(tid[2], NULL);
 
   return 0;
 }
