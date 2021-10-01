@@ -64,7 +64,7 @@ typedef struct {
 
 void data_init();
 void devices_in_handler(int command);
-void store_devices_out_update(DevicesOut dev_out);
+void store_devices_out_update(DevicesOut dev_out_updated);
 DevicesOut recover_devices_out_data();
 
 #endif
