@@ -29,5 +29,5 @@ void quit_handler(char *message) {
     printf("%s\n", message);
   }
 
-  exit(0);
+  exit(1);
 }

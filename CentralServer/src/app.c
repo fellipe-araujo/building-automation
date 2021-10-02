@@ -27,11 +27,11 @@ void* app_handler() {
     DHT22 dht22_ground_floor = request_data(0);
     DHT22 dht22_first_floor = request_data(1);
 
-    if (dht22_ground_floor.temperature != 0 && dht22_ground_floor.humidity != 0) {
+    if (dht22_ground_floor.temperature > 0 && dht22_ground_floor.humidity > 0) {
       _data.dht22_ground_floor = dht22_ground_floor;
     }
 
-    if (dht22_first_floor.temperature != 0 && dht22_first_floor.humidity != 0) {
+    if (dht22_first_floor.temperature > 0 && dht22_first_floor.humidity > 0) {
       _data.dht22_first_floor = dht22_first_floor;
     }
 
