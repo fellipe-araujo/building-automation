@@ -33,13 +33,16 @@ void handle_door_ground(void) {
 }
 
 // void handle_counter_in_ground(void) {
+//   millis();
 //   printf("Counter in sensor on the ground floor was detected!\n");
 //   send_command(SC_IN);
+//   delay(300);
 // }
 
 // void handle_counter_out_ground(void) {
 //   printf("Counter out sensor on the ground floor was detected!\n");
 //   send_command(SC_OUT);
+//   delay(300);
 // }
 
 void handle_presence_first(void) {
