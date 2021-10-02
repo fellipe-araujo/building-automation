@@ -44,14 +44,14 @@ void* recv_message() {
   struct sockaddr_in server_addr;
   struct sockaddr_in client_addr;
 
-	int server_id = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
+	int server_id = socket(AF_INET, SOCK_STREAM, 0);
 
   if (server_id < 0) {
     char *message = "ERRO NO SOCKET DO SERVIDOR!";
     quit_handler(message);
   }
 
-	memset(&server_addr, 0, sizeof(server_addr));
+	memset(&server_addr, '0', sizeof(server_addr));
 	server_addr.sin_family = AF_INET;
 	server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
 	server_addr.sin_port = htons(SERVER_CENTRAL_PORT);
@@ -67,8 +67,8 @@ void* recv_message() {
 	}
 
   while (1) {
-	  unsigned int len = sizeof(client_addr);
-	  int client_id = accept(server_id, (struct sockaddr*) &client_addr, &len);
+	  unsigned int client_length = sizeof(client_addr);
+	  int client_id = accept(server_id, (struct sockaddr*) &client_addr, &client_length);
 
     if (client_id < 0) {
       char *message = "ERRO NO ACCEPT!";
