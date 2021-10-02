@@ -13,14 +13,14 @@
 
 void send_command(int command) {
   struct sockaddr_in server_addr;
-  int client_id = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
+  int client_id = socket(AF_INET, SOCK_STREAM, 0);
 
   if (client_id < 0) {
     printf("ERROR NO SOCKET!\n");
     quit_handler();
   }
 
-  memset(&server_addr, 0, sizeof(server_addr));
+  memset(&server_addr, '0', sizeof(server_addr));
   server_addr.sin_family = AF_INET;
   server_addr.sin_addr.s_addr = inet_addr(SERVER_CENTRAL_IP);
   server_addr.sin_port = htons(SERVER_CENTRAL_PORT);
@@ -38,8 +38,6 @@ void send_command(int command) {
   if (send(client_id, buffer, size, 0) != size) {
     printf("ERROR NO SEND: Número de bytes enviados diferente do esperado!\n");
     quit_handler();
-  } else {
-    printf("SUCESSO NO SEND: comando enviado - %s\n", buffer);
   }
 
   close(client_id);
