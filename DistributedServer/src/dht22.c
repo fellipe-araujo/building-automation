@@ -7,17 +7,17 @@
 
 #include "dht22.h"
 
-// GLOBAL VARIABLES
-uint8_t dht_pin = 28;  // GPIO 20 (wiringPi 28)
+#define PIN_GROUND_FLOOR 28
+#define PIN_FIRST_FLOOR 29
 
 int data[5] = { 0, 0, 0, 0, 0 };
 
 // FUNCTION DECLARATIONS
 int dht22_setup();
-int dht22_read_data(float *temperature, float *humidity);
+int dht22_read_data(float *temperature, float *humidity, int floor);
 
 // FUNCTION DEFINITIONS
-int dht22_read_data(float *temperature, float *humidity) {
+int dht22_read_data(float *temperature, float *humidity, int floor) {
 	uint8_t laststate = HIGH;
 	uint8_t counter	= 0;
 	uint8_t j = 0;
@@ -26,24 +26,24 @@ int dht22_read_data(float *temperature, float *humidity) {
 	data[0] = data[1] = data[2] = data[3] = data[4] = 0;
 
 	/* pull pin down for 18 milliseconds */
-	pinMode(dht_pin, OUTPUT);
-	digitalWrite(dht_pin, LOW);
+	pinMode(floor == 0 ? PIN_GROUND_FLOOR : PIN_FIRST_FLOOR, OUTPUT);
+	digitalWrite(floor == 0 ? PIN_GROUND_FLOOR : PIN_FIRST_FLOOR, LOW);
 	delay(18);
 
 	/* prepare to read the pin */
-	pinMode(dht_pin, INPUT);
+	pinMode(floor == 0 ? PIN_GROUND_FLOOR : PIN_FIRST_FLOOR, INPUT);
 
 	/* detect change and read data */
 	for ( i = 0; i < MAX_TIMINGS; i++ ) {
 		counter = 0;
-		while ( digitalRead( dht_pin ) == laststate ) {
+		while ( digitalRead( floor == 0 ? PIN_GROUND_FLOOR : PIN_FIRST_FLOOR ) == laststate ) {
 			counter++;
 			delayMicroseconds( 1 );
 			if ( counter == 255 ) {
 				break;
 			}
 		}
-		laststate = digitalRead( dht_pin );
+		laststate = digitalRead( floor == 0 ? PIN_GROUND_FLOOR : PIN_FIRST_FLOOR );
 
 		if ( counter == 255 )
 			break;
@@ -64,23 +64,23 @@ int dht22_read_data(float *temperature, float *humidity) {
 	 */
 	if ( (j >= 40) && (data[4] == ( (data[0] + data[1] + data[2] + data[3]) & 0xFF) ) ) {
 		float h = (float)((data[0] << 8) + data[1]) / 10;
-		if ( h > 100 ) {
-			h = data[0];	// for DHT11
-		}
+		// if ( h > 100 ) {
+		// 	h = data[0];	// for DHT11
+		// }
 		float c = (float)(((data[2] & 0x7F) << 8) + data[3]) / 10;
-		if ( c > 125 ) {
-			c = data[2];	// for DHT11
-		}
+		// if ( c > 125 ) {
+		// 	c = data[2];	// for DHT11
+		// }
 		if ( data[2] & 0x80 ) {
 			c = -c;
 		}
-		temperature = &c;
-		humidity = &h;
-		if (DEBUG) printf( "Humidity = %.1f %% Temperature = %.1f *C\n", *humidity, *temperature );
+		*temperature = c;
+		*humidity = h;
+		
 		return 0; // OK
 	} else {
-		if (DEBUG) printf( "read_dht_data() Data not good, skip\n" );
 		*temperature = *humidity = -1.0;
+		
 		return 1; // NOK
 	}
 }
