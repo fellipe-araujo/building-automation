@@ -33,6 +33,7 @@ void data_init() {
   _dev_in.sf_1 = 0;
   _dev_in.sj_101 = 0;
   _dev_in.sj_102 = 0;
+  _dev_in.person_counter = 0;
 
   Data data = current_data();
   data.dev_out = _dev_out;
@@ -43,6 +44,7 @@ void data_init() {
 void devices_in_handler(int command) {
   // printf("Command: %d   |   State: %d\n", command, state);
   if (command == SP_T) {
+
     _dev_in.sp_t = _dev_in.sp_t == 1 ? 0 : 1;
   }
 
@@ -63,11 +65,13 @@ void devices_in_handler(int command) {
   }
 
   // else if (command == SC_IN) {
-  //   _dev_in.sc_in = _dev_in.sc_in == 1 ? 0 : 1;
+  //   if (_dev_in.person_counter < 100)
+  //     _dev_in.person_counter++;
   // }
 
   // else if (command == SC_OUT) {
-  //   _dev_in.sc_out = _dev_in.sc_out == 1 ? 0 : 1;
+  //   if (_dev_in.person_counter > 0)
+  //     _dev_in.person_counter--;
   // }
 
   else if (command == SP_1) {
@@ -95,6 +99,16 @@ void devices_in_handler(int command) {
     _dev_in.sj_101 == 1 ||
     _dev_in.sj_102 == 1
   ) {
+    // if (_dev_out.alarm == 0 && _dev_in.sp_t == 1) {
+    //   // _dev_out.lc_t = 1;
+    //   send_command(LC_T, 1, 0);
+    // }
+
+    // if (_dev_out.alarm == 0 && _dev_in.sp_1 == 1) {
+    //   // _dev_out.lc_1 = 1;
+    //   send_command(LC_1, 1, 0);
+    // }
+
     alarm_handler();
   } else {
     Data data = current_data();
@@ -166,7 +180,7 @@ void store_devices_out_update(DevicesOut dev_out_updated) {
     res = send_command(AC_1, data.dev_out.ac_1, 1);
   }
 
-  else if (res == 1) {
+  if (res == 1) {
     _dev_out = dev_out_updated;
   }
 }
