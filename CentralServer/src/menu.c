@@ -128,11 +128,6 @@ void print_data(Data data) {
 	mvwprintw(window, 25, 18, data.dev_out.alarm_playing == 1 ? "SIM" : "NAO");
 	wattroff(window, COLOR_PAIR(data.dev_out.alarm_playing == 1 ? 3 : 2));
 
-	mvwprintw(window, 25, 50, "Pessoas: ");
-  wattron(window, COLOR_PAIR(1));
-	mvwprintw(window, 25, 59, "0");
-	wattroff(window, COLOR_PAIR(1));
-
   wrefresh(window);
 }
 
@@ -181,6 +176,11 @@ void print_devices_in(DevicesIn dev_in) {
 	wattron(window, COLOR_PAIR(dev_in.sj_102 == 1 ? 3 : 2));
 	mvwprintw(window, 12, 89, dev_in.sj_102 == 1 ? "ON " : "OFF");
 	wattroff(window, COLOR_PAIR(dev_in.sj_102 == 1 ? 3 : 2));
+
+	mvwprintw(window, 25, 50, "Pessoas: ");
+  wattron(window, COLOR_PAIR(1));
+	mvwprintw(window, 25, 59, "%d", dev_in.person_counter);
+	wattroff(window, COLOR_PAIR(1));
 
   wrefresh(window);
 }
