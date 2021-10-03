@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <unistd.h>
 
 #include "data.h"
 #include "menu.h"
@@ -44,8 +45,18 @@ void data_init() {
 void devices_in_handler(int command) {
   // printf("Command: %d   |   State: %d\n", command, state);
   if (command == SP_T) {
+    if (_dev_in.sp_t == 1) {
+      _dev_in.sp_t = 0;
+    } else {
+      _dev_in.sp_t = 1;
+    }
+  }
 
-    _dev_in.sp_t = _dev_in.sp_t == 1 ? 0 : 1;
+  else if (command == LC_T) {
+    Data dev_out_10s = current_data();
+    _dev_out.lc_t = _dev_out.lc_t == 1 ? 0 : 1;
+    dev_out_10s.dev_out = _dev_out;
+    print_data(dev_out_10s);
   }
 
   else if (command == SF_T) {
@@ -75,7 +86,19 @@ void devices_in_handler(int command) {
   // }
 
   else if (command == SP_1) {
-    _dev_in.sp_1 = _dev_in.sp_1 == 1 ? 0 : 1;
+    if (_dev_in.sp_1 == 1) {
+      _dev_in.sp_1 = 0;
+      send_command(LC_1, 1, 0);
+    } else {
+      _dev_in.sp_1 = 1;
+    }
+  }
+
+  else if (command == LC_1) {
+    Data dev_out_10s = current_data();
+    _dev_out.lc_1 = _dev_out.lc_1 == 1 ? 0 : 1;
+    dev_out_10s.dev_out = _dev_out;
+    print_data(dev_out_10s);
   }
 
   else if (command == SF_1) {
@@ -92,10 +115,12 @@ void devices_in_handler(int command) {
 
   if (
     _dev_in.sp_t == 1 ||
+    _dev_in.sf_t == 1 ||
     _dev_in.sj_t01 == 1 ||
     _dev_in.sj_t02 == 1 ||
     _dev_in.spo_T == 1 ||
     _dev_in.sp_1 == 1 ||
+    _dev_in.sf_1 == 1 ||
     _dev_in.sj_101 == 1 ||
     _dev_in.sj_102 == 1
   ) {

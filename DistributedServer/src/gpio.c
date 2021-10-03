@@ -10,6 +10,21 @@ void gpio_setup() {
 void handle_presence_ground(void) {
   printf("SP_T - Sensor de presenca do andar terreo foi detectado!\n");
   send_command(SP_T);
+
+  int sp_t_state = digitalRead(SP_T);
+  int lc_t_state = digitalRead(LC_T);
+
+  if (sp_t_state == 1 && lc_t_state == 0) {
+    pinMode(LC_T, OUTPUT);
+    digitalWrite(LC_T, HIGH);
+    send_command(LC_T);
+
+    sleep(10);
+
+    pinMode(LC_T, OUTPUT);
+    digitalWrite(LC_T, LOW);
+    send_command(LC_T);
+  }
 }
 
 void handle_smoke_ground(void) {
@@ -48,6 +63,21 @@ void handle_door_ground(void) {
 void handle_presence_first(void) {
   printf("SP_1 - Sensor de presenca do primeiro andar foi detectado!\n");
   send_command(SP_1);
+
+  int sp_1_state = digitalRead(SP_1);
+  int lc_1_state = digitalRead(LC_1);
+
+  if (sp_1_state == 1 && lc_1_state == 0) {
+    pinMode(LC_1, OUTPUT);
+    digitalWrite(LC_1, HIGH);
+    send_command(LC_1);
+
+    sleep(10);
+
+    pinMode(LC_1, OUTPUT);
+    digitalWrite(LC_1, LOW);
+    send_command(LC_1);
+  }
 }
 
 void handle_smoke_first(void) {
