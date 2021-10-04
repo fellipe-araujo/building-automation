@@ -30,6 +30,18 @@ void handle_presence_ground(void) {
 void handle_smoke_ground(void) {
   printf("SF_T - Sensor de fumaça do andar terreo foi detectado!\n");
   send_command(SF_T);
+
+  int sf_t_state = digitalRead(SF_T);
+
+  if (sf_t_state == 1) {
+    pinMode(ASP, OUTPUT);
+    digitalWrite(ASP, HIGH);
+    send_command(ASP);
+  } else {
+    pinMode(ASP, OUTPUT);
+    digitalWrite(ASP, LOW);
+    send_command(ASP);
+  }
 }
 
 void handle_window_1_ground(void) {
@@ -83,6 +95,18 @@ void handle_presence_first(void) {
 void handle_smoke_first(void) {
   printf("SF_1 - Sensor de fumaca do primeiro andar foi detectado!\n");
   send_command(SF_1);
+
+  int sf_1_state = digitalRead(SF_1);
+
+  if (sf_1_state == 1) {
+    pinMode(ASP, OUTPUT);
+    digitalWrite(ASP, HIGH);
+    send_command(ASP);
+  } else {
+    pinMode(ASP, OUTPUT);
+    digitalWrite(ASP, LOW);
+    send_command(ASP);
+  }
 }
 
 void handle_window_1_first(void) {

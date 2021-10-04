@@ -14,7 +14,7 @@
 #define SERVER_CENTRAL_PORT 10032
 
 void process_client_tcp(int client_id) {
-  char buffer[16];
+  char buffer[6];
   int size;
 
   if ((size = recv(client_id, buffer, 16, 0)) < 0) {
@@ -33,7 +33,7 @@ void process_client_tcp(int client_id) {
       quit_handler(message);
     }
 
-    if ((size = recv(client_id, buffer, 16, 0)) < 0) {
+    if ((size = recv(client_id, buffer, 6, 0)) < 0) {
       char *message = "ERRO NO RECV: Messagem recebida com o tamanho menor do que o esperado!";
       quit_handler(message);
     }

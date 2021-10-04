@@ -43,13 +43,8 @@ void data_init() {
 }
 
 void devices_in_handler(int command) {
-  // printf("Command: %d   |   State: %d\n", command, state);
   if (command == SP_T) {
-    if (_dev_in.sp_t == 1) {
-      _dev_in.sp_t = 0;
-    } else {
-      _dev_in.sp_t = 1;
-    }
+    _dev_in.sp_t = _dev_in.sp_t == 1 ? 0 : 1;
   }
 
   else if (command == LC_T) {
@@ -60,7 +55,27 @@ void devices_in_handler(int command) {
   }
 
   else if (command == SF_T) {
-    _dev_in.sf_t = _dev_in.sf_t == 1 ? 0 : 1;
+    Data data = current_data();
+
+    if (_dev_in.sf_t == 0) {
+      _dev_in.sf_t = 1;
+      _dev_out.alarm = 1;
+      data.dev_out = _dev_out;
+      print_data(data);
+    } else {
+      _dev_in.sf_t = 0;
+      _dev_out.alarm = 0;
+      alarm_off();
+      data.dev_out = _dev_out;
+      print_data(data);
+    }
+  }
+
+  else if (command == ASP) {
+    Data dev_out_fire = current_data();
+    _dev_out.asp = _dev_out.asp == 1 ? 0 : 1;
+    dev_out_fire.dev_out = _dev_out;
+    print_data(dev_out_fire);
   }
 
   else if (command == SJ_T01) {
@@ -86,12 +101,7 @@ void devices_in_handler(int command) {
   // }
 
   else if (command == SP_1) {
-    if (_dev_in.sp_1 == 1) {
-      _dev_in.sp_1 = 0;
-      send_command(LC_1, 1, 0);
-    } else {
-      _dev_in.sp_1 = 1;
-    }
+    _dev_in.sp_1 = _dev_in.sp_1 == 1 ? 0 : 1;
   }
 
   else if (command == LC_1) {
@@ -102,7 +112,20 @@ void devices_in_handler(int command) {
   }
 
   else if (command == SF_1) {
-    _dev_in.sf_1 = _dev_in.sf_1 == 1 ? 0 : 1;
+    Data data = current_data();
+
+    if (_dev_in.sf_1 == 0) {
+      _dev_in.sf_1 = 1;
+      _dev_out.alarm = 1;
+      data.dev_out = _dev_out;
+      print_data(data);
+    } else {
+      _dev_in.sf_1 = 0;
+      _dev_out.alarm = 0;
+      alarm_off();
+      data.dev_out = _dev_out;
+      print_data(data);
+    }
   }
 
   else if (command == SJ_101) {
@@ -124,16 +147,6 @@ void devices_in_handler(int command) {
     _dev_in.sj_101 == 1 ||
     _dev_in.sj_102 == 1
   ) {
-    // if (_dev_out.alarm == 0 && _dev_in.sp_t == 1) {
-    //   // _dev_out.lc_t = 1;
-    //   send_command(LC_T, 1, 0);
-    // }
-
-    // if (_dev_out.alarm == 0 && _dev_in.sp_1 == 1) {
-    //   // _dev_out.lc_1 = 1;
-    //   send_command(LC_1, 1, 0);
-    // }
-
     alarm_handler();
   } else {
     Data data = current_data();
