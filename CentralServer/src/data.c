@@ -34,7 +34,7 @@ void data_init() {
   _dev_in.sf_1 = 0;
   _dev_in.sj_101 = 0;
   _dev_in.sj_102 = 0;
-  _dev_in.person_counter = 0;
+  _dev_in.people_counter = 0;
 
   Data data = current_data();
   data.dev_out = _dev_out;
@@ -66,6 +66,7 @@ void devices_in_handler(int command) {
       _dev_in.sf_t = 0;
       _dev_out.alarm = 0;
       alarm_off();
+      alarm_handler();
       data.dev_out = _dev_out;
       print_data(data);
     }
@@ -90,15 +91,15 @@ void devices_in_handler(int command) {
     _dev_in.spo_T = _dev_in.spo_T == 1 ? 0 : 1;
   }
 
-  // else if (command == SC_IN) {
-  //   if (_dev_in.person_counter < 100)
-  //     _dev_in.person_counter++;
-  // }
+  else if (command == SC_IN) {
+    if (_dev_in.people_counter < 100)
+      _dev_in.people_counter += 1;
+  }
 
-  // else if (command == SC_OUT) {
-  //   if (_dev_in.person_counter > 0)
-  //     _dev_in.person_counter--;
-  // }
+  else if (command == SC_OUT) {
+    if (_dev_in.people_counter > 0)
+      _dev_in.people_counter -= 1;
+  }
 
   else if (command == SP_1) {
     _dev_in.sp_1 = _dev_in.sp_1 == 1 ? 0 : 1;
@@ -123,6 +124,7 @@ void devices_in_handler(int command) {
       _dev_in.sf_1 = 0;
       _dev_out.alarm = 0;
       alarm_off();
+      alarm_handler();
       data.dev_out = _dev_out;
       print_data(data);
     }

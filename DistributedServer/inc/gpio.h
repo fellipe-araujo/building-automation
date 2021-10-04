@@ -56,6 +56,7 @@
 void gpio_setup();
 int device_exist(int device);
 void* gpio_handler();
+void* counter_people_handler();
 void change_device_state(int device, int state);
 void disable_output_devices();
 

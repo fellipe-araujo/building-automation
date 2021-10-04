@@ -59,18 +59,25 @@ void handle_door_ground(void) {
   send_command(SPo_T);
 }
 
-// void handle_counter_in_ground(void) {
-//   millis();
-//   printf("Counter in sensor on the ground floor was detected!\n");
-//   send_command(SC_IN);
-//   delay(300);
-// }
+void handle_counter_in_ground(void) {
+  int sc_in_state = digitalRead(SC_IN);
 
-// void handle_counter_out_ground(void) {
-//   printf("Counter out sensor on the ground floor was detected!\n");
-//   send_command(SC_OUT);
-//   delay(300);
-// }
+  if (sc_in_state == 1) {
+    printf("Counter in sensor on the ground floor was detected!\n");
+    send_command(SC_IN);
+    delay(280);
+  }
+}
+
+void handle_counter_out_ground(void) {
+  int sc_out_state = digitalRead(SC_OUT);
+
+  if (sc_out_state == 1) {
+    printf("Counter out sensor on the ground floor was detected!\n");
+    send_command(SC_OUT);
+    delay(280);
+  }
+}
 
 void handle_presence_first(void) {
   printf("SP_1 - Sensor de presenca do primeiro andar foi detectado!\n");
@@ -135,12 +142,6 @@ void* gpio_handler() {
   pinMode(SPo_T, OUTPUT);
   wiringPiISR(SPo_T, INT_EDGE_BOTH, &handle_door_ground);
 
-  // pinMode(SC_IN, OUTPUT);
-  // wiringPiISR(SC_IN, INT_EDGE_BOTH, &handle_counter_in_ground);
-
-  // pinMode(SC_OUT, OUTPUT);
-  // wiringPiISR(SC_OUT, INT_EDGE_BOTH, &handle_counter_out_ground);
-
   pinMode(SP_1, OUTPUT);
   wiringPiISR(SP_1, INT_EDGE_BOTH, &handle_presence_first);
 
@@ -152,6 +153,18 @@ void* gpio_handler() {
 
   pinMode(SJ_102, OUTPUT);
   wiringPiISR(SJ_102, INT_EDGE_BOTH, &handle_window_2_first);
+
+  for (;;) {
+    sleep(1);
+  }
+}
+
+void* counter_people_handler() {
+  pinMode(SC_IN, OUTPUT);
+  wiringPiISR(SC_IN, INT_EDGE_BOTH, &handle_counter_in_ground);
+
+  pinMode(SC_OUT, OUTPUT);
+  wiringPiISR(SC_OUT, INT_EDGE_BOTH, &handle_counter_out_ground);
 
   for (;;) {
     sleep(1);

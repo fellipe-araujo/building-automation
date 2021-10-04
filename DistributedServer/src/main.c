@@ -7,15 +7,17 @@ int main () {
 
   disable_output_devices();
 
-  pthread_t tid[3];
+  pthread_t tid[4];
 
   pthread_create(&tid[0], NULL, (void *)gpio_handler, (void *)NULL);
-  pthread_create(&tid[1], NULL, (void *)server_handler, (void*)0);
-  pthread_create(&tid[2], NULL, (void *)server_handler, (void*)1);
+  pthread_create(&tid[1], NULL, (void *)counter_people_handler, (void *)NULL);
+  pthread_create(&tid[2], NULL, (void *)server_handler, (void*)0);
+  pthread_create(&tid[3], NULL, (void *)server_handler, (void*)1);
 
   pthread_join(tid[0], NULL);
 	pthread_join(tid[1], NULL);
 	pthread_join(tid[2], NULL);
+	pthread_join(tid[3], NULL);
 
   return 0;
 }

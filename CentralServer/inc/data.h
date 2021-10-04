@@ -49,7 +49,7 @@ typedef struct {
   int sf_1;
   int sj_101;
   int sj_102;
-  int person_counter;
+  int people_counter;
 } DevicesIn;
 
 typedef struct {

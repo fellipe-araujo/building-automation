@@ -179,7 +179,7 @@ void print_devices_in(DevicesIn dev_in) {
 
 	mvwprintw(window, 25, 50, "Pessoas: ");
   wattron(window, COLOR_PAIR(1));
-	mvwprintw(window, 25, 59, "%d", dev_in.person_counter);
+	mvwprintw(window, 25, 59, dev_in.people_counter >= 10 ? "%d" : "0%d", dev_in.people_counter);
 	wattroff(window, COLOR_PAIR(1));
 
   wrefresh(window);
