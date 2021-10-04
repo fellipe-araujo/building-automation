@@ -16,7 +16,7 @@ void time_generate() {
   time(&current_time);
   time_info = localtime(&current_time);
 
-  strftime(buffer, BUF_LEN, "%c", time_info);
+  strftime(buffer, BUF_LEN, "%Y-%m-%d %H:%M:%S", time_info);
 }
 
 void csv_setup() {
@@ -30,12 +30,12 @@ void write_data(Command command) {
   time_generate();
 
   // Write file
-  FILE *file = fopen("data.csv", "a");
+  FILE *file = fopen("logs/data.csv", "a");
   char *state = command.state == 1 ? "ON" : "OFF";
 
   fprintf(
     file,
-    "%s,%s,%s\r\n",
+    "%s,%s,%s\n",
     buffer,
     command.device,
     state
