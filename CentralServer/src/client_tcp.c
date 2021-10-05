@@ -12,8 +12,8 @@
 #include "socket_quit.h"
 
 #define SERVER_DISTRIBUTED_IP "192.168.0.52"
-#define SERVER_DISTRIBUTED_1_PORT 10132
-#define SERVER_DISTRIBUTED_2_PORT 10232
+#define SERVER_DISTRIBUTED_1_PORT 10311
+#define SERVER_DISTRIBUTED_2_PORT 10411
 
 int send_command(int device, int state, int floor) {
   struct sockaddr_in server_addr;
@@ -68,20 +68,21 @@ DHT22 request_data(int floor) {
   dht22.temperature = 0.0;
   dht22.humidity = 0.0;
 
-  int client_id = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
+  int client_id = socket(AF_INET, SOCK_STREAM, 0);
   
   if (client_id < 0) {
-    printf("client_id < 0\n");
+    // printf("client_id < 0\n");
     return dht22;
   }
 
-  memset(&server_addr, 0, sizeof(server_addr));
+  memset(&server_addr, '0', sizeof(server_addr));
   server_addr.sin_family = AF_INET;
   server_addr.sin_addr.s_addr = inet_addr(SERVER_DISTRIBUTED_IP);
   server_addr.sin_port = htons(floor == 0 ? SERVER_DISTRIBUTED_1_PORT : SERVER_DISTRIBUTED_2_PORT);
 
   if (connect(client_id, (struct sockaddr*) &server_addr, sizeof(server_addr)) < 0) {
     // printf("connect() < 0\n");
+    // printf("Floor: %d\n", floor);
     return dht22;
   }
 
@@ -92,7 +93,7 @@ DHT22 request_data(int floor) {
   int size = strlen(buf);
 
   if (send(client_id, buf, size, 0) != size) {
-    printf("send() != size\n");
+    // printf("send() != size\n");
     close(client_id);
     return dht22;
   }
@@ -101,10 +102,9 @@ DHT22 request_data(int floor) {
   int total_bytes_rec = 0;
   int size_rec;
 
-  // printf("VAI ENTRAR NO WHILE()\n");
   while (total_bytes_rec < size) {
     if ((size_rec = recv(client_id, buffer, 16 - 1, 0)) <= 0) {
-      printf("Não recebeu o total de bytes enviados\n");
+      // printf("Não recebeu o total de bytes enviados\n");
       close(client_id);
       return dht22;
     }

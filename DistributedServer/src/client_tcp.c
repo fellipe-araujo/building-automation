@@ -9,7 +9,7 @@
 #include "socket_quit.h"
 
 #define SERVER_CENTRAL_IP "192.168.0.53"
-#define SERVER_CENTRAL_PORT 10032
+#define SERVER_CENTRAL_PORT 10211
 
 void send_command(int command) {
   struct sockaddr_in server_addr;

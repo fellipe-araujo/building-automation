@@ -8,8 +8,8 @@
 #include "dht22.h"
 #include "socket_quit.h"
 
-#define SERVER_DISTRIBUTED_1_PORT 10132
-#define SERVER_DISTRIBUTED_2_PORT 10232
+#define SERVER_DISTRIBUTED_1_PORT 10311
+#define SERVER_DISTRIBUTED_2_PORT 10411
 
 void process_client_tcp(int client_id) {
   char buffer[16];

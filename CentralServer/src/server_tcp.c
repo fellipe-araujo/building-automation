@@ -11,7 +11,7 @@
 #include "alarm.h"
 #include "socket_quit.h"
 
-#define SERVER_CENTRAL_PORT 10032
+#define SERVER_CENTRAL_PORT 10211
 
 void process_client_tcp(int client_id) {
   char buffer[6];
