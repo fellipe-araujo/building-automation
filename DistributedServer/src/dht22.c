@@ -76,11 +76,13 @@ int dht22_read_data(float *temperature, float *humidity, int floor) {
 		}
 		*temperature = c;
 		*humidity = h;
+
+		// printf("Temp: %4.2f | Humi: %4.2f\n", *temperature, *humidity);
 		
 		return 0; // OK
 	} else {
 		*temperature = *humidity = -1.0;
-		
+		// printf("Temp: %4.2f | Humi: %4.2f\n", *temperature, *humidity);
 		return 1; // NOK
 	}
 }

@@ -63,7 +63,7 @@ void handle_counter_in_ground(void) {
   int sc_in_state = digitalRead(SC_IN);
 
   if (sc_in_state == 1) {
-    printf("Counter in sensor on the ground floor was detected!\n");
+    printf("SC_IN - Sensor de pessoas entrando no prédio foi detectado!\n");
     send_command(SC_IN);
     delay(280);
   }
@@ -73,7 +73,7 @@ void handle_counter_out_ground(void) {
   int sc_out_state = digitalRead(SC_OUT);
 
   if (sc_out_state == 1) {
-    printf("Counter out sensor on the ground floor was detected!\n");
+    printf("SC_OUT - Sensor de pessoas saindo do prédio foi detectado!\n");
     send_command(SC_OUT);
     delay(280);
   }
