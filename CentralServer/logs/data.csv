@@ -1,0 +1,17 @@
+DATETIME, DEVICE, STATE
+2021-10-05 17:05:07,Térreo - Lâmpada da Sala 01,ON
+2021-10-05 17:05:10,Térreo - Ar-Condicionado,ON
+2021-10-05 17:05:13,Primeiro Andar - Lâmpada da Sala 101,ON
+2021-10-05 17:05:16,Primeiro Andar - Lâmpadas do Corredor,ON
+2021-10-05 17:05:18,Térreo - Lâmpadas do Corredor,ON
+2021-10-05 17:05:20,Térreo - Lâmpada da Sala 02,ON
+2021-10-05 17:05:24,Primeiro Andar - Lâmpada da Sala 102,ON
+2021-10-05 17:05:31,Primeiro Andar - Lâmpadas do Corredor,OFF
+2021-10-05 17:05:32,Primeiro Andar - Lâmpada da Sala 102,OFF
+2021-10-05 17:05:35,Primeiro Andar - Ar-Condicionado,ON
+2021-10-05 17:05:38,Primeiro Andar - Ar-Condicionado,OFF
+2021-10-05 17:05:40,Primeiro Andar - Lâmpada da Sala 101,OFF
+2021-10-05 17:05:42,Térreo - Lâmpadas do Corredor,OFF
+2021-10-05 17:05:44,Térreo - Lâmpada da Sala 01,OFF
+2021-10-05 17:05:45,Térreo - Lâmpada da Sala 02,OFF
+2021-10-05 17:05:46,Térreo - Ar-Condicionado,OFF
